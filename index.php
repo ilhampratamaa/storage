@@ -22,6 +22,7 @@ if(is_post()){
 }
 require __DIR__.'/partials/header.php';
 if($page==='dashboard'){
+ if($_SESSION['user']['role']==='admin') echo '<div class="d-flex justify-content-end mb-3"><a class="btn btn-outline-primary" href="'.url('members.php').'">👥 Kelola Member & Admin</a></div>';
  $stats=['Total barang'=>$pdo->query('SELECT COUNT(*) FROM barang WHERE aktif=1')->fetchColumn(),'Total stok'=>$pdo->query('SELECT COALESCE(SUM(stok),0) FROM barang WHERE aktif=1')->fetchColumn(),'Barang masuk'=>$pdo->query("SELECT COALESCE(SUM(jumlah),0) FROM transaksi WHERE jenis='masuk'")->fetchColumn(),'Barang keluar'=>$pdo->query("SELECT COALESCE(SUM(jumlah),0) FROM transaksi WHERE jenis='keluar'")->fetchColumn(),'Kategori'=>$pdo->query('SELECT COUNT(*) FROM kategori')->fetchColumn()];
  echo '<div class="row g-3 mb-4">';foreach($stats as $k=>$v)echo '<div class="col-6 col-lg"><div class="card h-100"><div class="card-body d-flex align-items-center gap-3"><span class="stat-icon">▣</span><div><small class="text-secondary">'.e($k).'</small><h3 class="mb-0">'.e($v).'</h3></div></div></div></div>';echo '</div>';
  $latest=$pdo->query('SELECT b.*,k.nama kategori,l.gedung,l.ruang,l.rak FROM barang b LEFT JOIN kategori k ON k.id=b.kategori_id LEFT JOIN lokasi l ON l.id=b.lokasi_id WHERE b.aktif=1 ORDER BY b.created_at DESC LIMIT 5')->fetchAll(PDO::FETCH_ASSOC);$act=$pdo->query('SELECT t.*,b.kode,b.nama,u.nama user FROM transaksi t JOIN barang b ON b.id=t.barang_id JOIN users u ON u.id=t.user_id ORDER BY t.created_at DESC LIMIT 6')->fetchAll(PDO::FETCH_ASSOC); ?>
