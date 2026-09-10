@@ -1,0 +1,27 @@
+<?php
+require_once __DIR__.'/bootstrap.php'; require_login();
+$periode=$_GET['periode']??'harian';
+if(!in_array($periode,['harian','bulanan'],true)) $periode='harian';
+$tanggal=$_GET['tanggal']??date('Y-m-d');
+$bulan=$_GET['bulan']??date('Y-m');
+if($periode==='harian'){
+    $label='Laporan Harian'; $rentang=$tanggal;
+    $sql='SELECT t.*, b.kode,b.nama,b.satuan,u.nama user FROM transaksi t JOIN barang b ON b.id=t.barang_id JOIN users u ON u.id=t.user_id WHERE t.tanggal=? ORDER BY t.id ASC'; $params=[$tanggal];
+} else {
+    $label='Laporan Bulanan'; $rentang=date('F Y',strtotime($bulan.'-01'));
+    $sql='SELECT t.*, b.kode,b.nama,b.satuan,u.nama user FROM transaksi t JOIN barang b ON b.id=t.barang_id JOIN users u ON u.id=t.user_id WHERE DATE_FORMAT(t.tanggal, "%Y-%m")=? ORDER BY t.tanggal,t.id ASC'; $params=[$bulan];
+}
+$s=$pdo->prepare($sql);$s->execute($params);$rows=$s->fetchAll(PDO::FETCH_ASSOC);
+$masuk=0;$keluar=0;foreach($rows as $r){if($r['jenis']==='masuk')$masuk+=(int)$r['jumlah'];else $keluar+=(int)$r['jumlah'];}
+if(isset($_GET['unduh'])){
+    $namaFile='invoice-storage-'.($periode==='harian'?$tanggal:$bulan).'.html';
+    header('Content-Type: text/html; charset=utf-8');
+    header('Content-Disposition: attachment; filename="'.$namaFile.'"');
+}
+if(!isset($_GET['unduh'])){
+    $downloadUrl=url('laporan.php?periode='.urlencode($periode).($periode==='harian'?'&tanggal='.urlencode($tanggal):'&bulan='.urlencode($bulan)).'&unduh=1');
+    register_shutdown_function(static function() use ($downloadUrl) {
+        echo '<script>const b=document.querySelector("button[onclick=\\"window.print()\\"]");if(b){b.textContent="Cetak";const a=document.createElement("a");a.className="btn btn-success ms-2";a.href='.json_encode($downloadUrl).';a.textContent="Unduh Invoice";b.insertAdjacentElement("afterend",a);}</script>';
+    });
+}
+?><!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title><?=e($label)?> | StorageQR</title><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"><style>body{background:#f3f5f8}.invoice{max-width:1000px;margin:2rem auto;background:#fff;padding:3rem;box-shadow:0 1px 10px #0001}.logo{color:#2563eb;font-weight:700;font-size:1.5rem}.table th{background:#f1f5f9}@media print{body{background:#fff}.invoice{box-shadow:none;margin:0;max-width:none;padding:0}.no-print{display:none!important}}</style></head><body><main class="invoice"><div class="no-print d-flex justify-content-between mb-4"><a href="<?=url('index.php?page=riwayat')?>" class="btn btn-outline-secondary">← Kembali</a><button onclick="window.print()" class="btn btn-primary">Cetak / Simpan PDF</button></div><div class="d-flex justify-content-between border-bottom pb-3 mb-4"><div><div class="logo">▣ StorageQR</div><div class="text-secondary">Manajemen Storage / Gudang</div></div><div class="text-end"><h3 class="mb-1">INVOICE LAPORAN</h3><div><?=e($label)?></div><small class="text-secondary">Dicetak: <?=date('d-m-Y H:i')?></small></div></div><div class="row mb-4"><div class="col-7"><b>Periode laporan</b><br><span class="text-secondary"><?=e($rentang)?></span></div><div class="col-5 text-end"><b>Dibuat oleh</b><br><span class="text-secondary"><?=e($_SESSION['user']['nama'])?></span></div></div><div class="row g-3 mb-4"><div class="col-4"><div class="border rounded p-3"><small class="text-secondary">Total transaksi</small><div class="fs-4 fw-bold"><?=count($rows)?></div></div></div><div class="col-4"><div class="border rounded p-3"><small class="text-secondary">Total barang masuk</small><div class="fs-4 fw-bold text-success"><?=$masuk?></div></div></div><div class="col-4"><div class="border rounded p-3"><small class="text-secondary">Total barang keluar</small><div class="fs-4 fw-bold text-danger"><?=$keluar?></div></div></div></div><table class="table table-bordered align-middle"><thead><tr><th>#</th><th>Tanggal</th><th>Kode / Barang</th><th>Jenis</th><th class="text-end">Jumlah</th><th>User</th><th>Keterangan</th></tr></thead><tbody><?php if(!$rows):?><tr><td colspan="7" class="text-center text-secondary py-4">Tidak ada transaksi pada periode ini.</td></tr><?php endif;foreach($rows as $i=>$r):?><tr><td><?=$i+1?></td><td><?=e($r['tanggal'])?></td><td><b><?=e($r['kode'])?></b><br><?=e($r['nama'])?></td><td><?=e(ucfirst($r['jenis']))?></td><td class="text-end"><?=e($r['jumlah'].' '.$r['satuan'])?></td><td><?=e($r['user'])?></td><td><?=e($r['keterangan']?:'-')?></td></tr><?php endforeach?></tbody></table><div class="row mt-5"><div class="col-7"><small class="text-secondary">Dokumen ini dibuat otomatis oleh sistem StorageQR.</small></div><div class="col-5 text-center">Mengetahui,<br><br><br><br>________________________</div></div></main></body></html>
