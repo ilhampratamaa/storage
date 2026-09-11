@@ -5,8 +5,8 @@ Aplikasi manajemen gudang berbasis QR Code dengan PHP native, MySQL/MariaDB, dan
 ## Instalasi
 
 1. Salin folder proyek ini ke `htdocs` (XAMPP) atau folder web server Anda.
-2. Ubah `BASE_URL` dan kredensial MySQL pada `config.php` bila diperlukan. Contoh: `define('BASE_URL', '/storage');`.
-3. Buka `http://localhost/storage/install.php` sekali untuk membuat database serta tabel.
+2. Ubah kredensial MySQL pada `config.php` bila diperlukan. `BASE_URL` dikosongkan agar alamat mengikuti IP komputer di jaringan yang sedang dipakai.
+3. Buka `http://IP-KOMPUTER/storage/install.php` sekali untuk membuat database serta tabel.
 4. Buka `login.php`, lalu masuk dengan `admin` / `admin123`. Segera ubah/kelola akun ini untuk penggunaan nyata.
 
 ## Fitur
@@ -19,4 +19,4 @@ Aplikasi manajemen gudang berbasis QR Code dengan PHP native, MySQL/MariaDB, dan
 
 ## Catatan penggunaan QR
 
-QR berisi URL detail. Agar dapat dipindai dari smartphone lain, aplikasi harus diakses menggunakan alamat LAN komputer, misalnya `http://192.168.1.10/storage`, bukan `localhost`. Atur `BASE_URL` ke alamat tersebut.
+QR berisi URL detail. Agar dapat dipindai dari smartphone lain dan kamera live diizinkan browser, aplikasi harus diakses melalui HTTPS menggunakan alamat LAN komputer, bukan `localhost`. Untuk sekadar membuka aplikasi, HTTP melalui IP komputer sudah cukup. Sertifikat HTTPS harus dipercaya pada smartphone.

@@ -1,0 +1,80 @@
+<mxfile host="app.diagrams.net" modified="2026-09-11T00:00:00.000Z" agent="GitHub Copilot" version="24.7.17">
+  <diagram id="main-flow" name="Flowchart Utama">
+    <mxGraphModel dx="1600" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1000" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/><mxCell id="1" parent="0"/>
+        <mxCell id="start" value="Mulai / buka aplikasi" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1" vertex="1" parent="1"><mxGeometry x="670" y="20" width="220" height="60" as="geometry"/></mxCell>
+        <mxCell id="db" value="Instalasi awal?&lt;br&gt;install.php membuat database dan tabel" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656" vertex="1" parent="1"><mxGeometry x="630" y="120" width="300" height="90" as="geometry"/></mxCell>
+        <mxCell id="install" value="Jalankan install.php&lt;br&gt;Database storage_qr siap" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf" vertex="1" parent="1"><mxGeometry x="260" y="135" width="260" height="65" as="geometry"/></mxCell>
+        <mxCell id="login" value="login.php&lt;br&gt;Input username dan password" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf" vertex="1" parent="1"><mxGeometry x="670" y="260" width="220" height="70" as="geometry"/></mxCell>
+        <mxCell id="valid" value="Kredensial valid&lt;br&gt;dan akun aktif?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656" vertex="1" parent="1"><mxGeometry x="650" y="370" width="260" height="90" as="geometry"/></mxCell>
+        <mxCell id="error" value="Tampilkan pesan error&lt;br&gt;Username atau password salah" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450" vertex="1" parent="1"><mxGeometry x="980" y="382" width="250" height="65" as="geometry"/></mxCell>
+        <mxCell id="dashboard" value="index.php&lt;br&gt;Dashboard dan navigasi" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1" vertex="1" parent="1"><mxGeometry x="670" y="515" width="220" height="70" as="geometry"/></mxCell>
+        <mxCell id="role" value="Role pengguna?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656" vertex="1" parent="1"><mxGeometry x="650" y="625" width="260" height="85" as="geometry"/></mxCell>
+        <mxCell id="admin" value="ADMIN&lt;br&gt;Kelola member/admin&lt;br&gt;CRUD barang, kategori, lokasi&lt;br&gt;Catat transaksi" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6" vertex="1" parent="1"><mxGeometry x="240" y="755" width="300" height="105" as="geometry"/></mxCell>
+        <mxCell id="user" value="MEMBER / USER&lt;br&gt;Lihat dashboard dan barang&lt;br&gt;Scan QR dan lihat detail&lt;br&gt;Lihat riwayat dan laporan" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366" vertex="1" parent="1"><mxGeometry x="1010" y="755" width="300" height="105" as="geometry"/></mxCell>
+        <mxCell id="shared" value="Modul bersama:&lt;br&gt;barang | scan QR | detail | riwayat | laporan | invoice PDF" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666" vertex="1" parent="1"><mxGeometry x="610" y="755" width="340" height="105" as="geometry"/></mxCell>
+        <mxCell id="logout" value="logout.php&lt;br&gt;Hapus session" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450" vertex="1" parent="1"><mxGeometry x="660" y="920" width="240" height="55" as="geometry"/></mxCell>
+        <mxCell id="end" value="Selesai" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1" vertex="1" parent="1"><mxGeometry x="670" y="1015" width="220" height="55" as="geometry"/></mxCell>
+        <mxCell id="e1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;endArrow=block" edge="1" parent="1" source="start" target="db"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e2" value="Ya" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=block" edge="1" parent="1" source="db" target="install"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e3" value="Tidak" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=block" edge="1" parent="1" source="db" target="login"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e4" value="Lanjut login" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=block" edge="1" parent="1" source="install" target="login"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=block" edge="1" parent="1" source="login" target="valid"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e6" value="Tidak" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=block" edge="1" parent="1" source="valid" target="error"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e7" value="Coba lagi" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=block" edge="1" parent="1" source="error" target="login"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e8" value="Ya: buat session user" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=block" edge="1" parent="1" source="valid" target="dashboard"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e9" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=block" edge="1" parent="1" source="dashboard" target="role"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e10" value="admin" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=block" edge="1" parent="1" source="role" target="admin"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e11" value="user" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=block" edge="1" parent="1" source="role" target="user"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e12" value="Akses modul" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=block" edge="1" parent="1" source="admin" target="shared"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e13" value="Akses modul" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=block" edge="1" parent="1" source="user" target="shared"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e14" value="Keluar" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=block" edge="1" parent="1" source="shared" target="logout"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e15" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=block" edge="1" parent="1" source="logout" target="end"><mxGeometry relative="1" as="geometry"/></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="transaction-flow" name="Alur Transaksi Stok">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" page="1" pageScale="1" pageWidth="1400" pageHeight="900">
+      <root>
+        <mxCell id="0"/><mxCell id="1" parent="0"/>
+        <mxCell id="tstart" value="Admin membuka&lt;br&gt;index.php?page=transaksi" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366" vertex="1" parent="1"><mxGeometry x="520" y="25" width="260" height="65" as="geometry"/></mxCell>
+        <mxCell id="tform" value="Isi barang, jenis, jumlah,&lt;br&gt;tanggal dan keterangan" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf" vertex="1" parent="1"><mxGeometry x="500" y="135" width="300" height="70" as="geometry"/></mxCell>
+        <mxCell id="tvalid" value="Data valid?&lt;br&gt;jumlah &gt;= 1 dan jenis masuk/keluar" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656" vertex="1" parent="1"><mxGeometry x="490" y="255" width="320" height="95" as="geometry"/></mxCell>
+        <mxCell id="terr" value="Flash error dan rollback jika perlu" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450" vertex="1" parent="1"><mxGeometry x="920" y="270" width="260" height="65" as="geometry"/></mxCell>
+        <mxCell id="lock" value="Mulai transaction database&lt;br&gt;SELECT stok FOR UPDATE" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf" vertex="1" parent="1"><mxGeometry x="500" y="395" width="300" height="70" as="geometry"/></mxCell>
+        <mxCell id="stock" value="Jenis keluar dan stok kurang?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656" vertex="1" parent="1"><mxGeometry x="490" y="515" width="320" height="95" as="geometry"/></mxCell>
+        <mxCell id="short" value="Tolak transaksi&lt;br&gt;Rollback dan tampilkan stok tersedia" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450" vertex="1" parent="1"><mxGeometry x="920" y="530" width="260" height="65" as="geometry"/></mxCell>
+        <mxCell id="update" value="Update stok barang&lt;br&gt;Masuk: stok + jumlah&lt;br&gt;Keluar: stok - jumlah" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf" vertex="1" parent="1"><mxGeometry x="500" y="650" width="300" height="80" as="geometry"/></mxCell>
+        <mxCell id="history" value="Insert riwayat transaksi&lt;br&gt;barang_id, jenis, jumlah, user_id" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf" vertex="1" parent="1"><mxGeometry x="500" y="775" width="300" height="70" as="geometry"/></mxCell>
+        <mxCell id="commit" value="Commit&lt;br&gt;Flash sukses dan redirect ke riwayat" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366" vertex="1" parent="1"><mxGeometry x="510" y="890" width="280" height="70" as="geometry"/></mxCell>
+        <mxCell id="te1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=block" edge="1" parent="1" source="tstart" target="tform"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="te2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=block" edge="1" parent="1" source="tform" target="tvalid"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="te3" value="Tidak" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=block" edge="1" parent="1" source="tvalid" target="terr"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="te4" value="Ya" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=block" edge="1" parent="1" source="tvalid" target="lock"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="te5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=block" edge="1" parent="1" source="lock" target="stock"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="te6" value="Ya" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=block" edge="1" parent="1" source="stock" target="short"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="te7" value="Tidak / barang masuk" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=block" edge="1" parent="1" source="stock" target="update"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="te8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=block" edge="1" parent="1" source="update" target="history"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="te9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=block" edge="1" parent="1" source="history" target="commit"><mxGeometry relative="1" as="geometry"/></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="erd" name="ERD Database">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" page="1" pageScale="1" pageWidth="1400" pageHeight="900">
+      <root>
+        <mxCell id="0"/><mxCell id="1" parent="0"/>
+        <mxCell id="users" value="&lt;b&gt;users&lt;/b&gt;&lt;br&gt;PK id&lt;br&gt;nama&lt;br&gt;username (UNIQUE)&lt;br&gt;password&lt;br&gt;role: admin | user&lt;br&gt;aktif" style="swimlane;html=1;rounded=0;fillColor=#e1d5e7;strokeColor=#9673a6" vertex="1" parent="1"><mxGeometry x="80" y="120" width="250" height="190" as="geometry"/></mxCell>
+        <mxCell id="kategori" value="&lt;b&gt;kategori&lt;/b&gt;&lt;br&gt;PK id&lt;br&gt;nama (UNIQUE)&lt;br&gt;keterangan" style="swimlane;html=1;rounded=0;fillColor=#fff2cc;strokeColor=#d6b656" vertex="1" parent="1"><mxGeometry x="420" y="40" width="230" height="130" as="geometry"/></mxCell>
+        <mxCell id="lokasi" value="&lt;b&gt;lokasi&lt;/b&gt;&lt;br&gt;PK id&lt;br&gt;gedung&lt;br&gt;ruang&lt;br&gt;rak&lt;br&gt;keterangan" style="swimlane;html=1;rounded=0;fillColor=#fff2cc;strokeColor=#d6b656" vertex="1" parent="1"><mxGeometry x="420" y="235" width="230" height="160" as="geometry"/></mxCell>
+        <mxCell id="barang" value="&lt;b&gt;barang&lt;/b&gt;&lt;br&gt;PK id&lt;br&gt;kode (UNIQUE)&lt;br&gt;nama, stok, satuan&lt;br&gt;FK kategori_id&lt;br&gt;FK lokasi_id&lt;br&gt;kondisi, status&lt;br&gt;aktif, tanggal_masuk" style="swimlane;html=1;rounded=0;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1" vertex="1" parent="1"><mxGeometry x="760" y="125" width="270" height="220" as="geometry"/></mxCell>
+        <mxCell id="transaksi" value="&lt;b&gt;transaksi&lt;/b&gt;&lt;br&gt;PK id&lt;br&gt;FK barang_id&lt;br&gt;jenis: masuk | keluar&lt;br&gt;jumlah, tanggal&lt;br&gt;keterangan&lt;br&gt;FK user_id" style="swimlane;html=1;rounded=0;fillColor=#d5e8d4;strokeColor=#82b366" vertex="1" parent="1"><mxGeometry x="1100" y="130" width="250" height="190" as="geometry"/></mxCell>
+        <mxCell id="r1" value="1 : N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=ERone;startArrow=ERmany" edge="1" parent="1" source="kategori" target="barang"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="r2" value="1 : N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=ERone;startArrow=ERmany" edge="1" parent="1" source="lokasi" target="barang"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="r3" value="1 : N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=ERone;startArrow=ERmany" edge="1" parent="1" source="barang" target="transaksi"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="r4" value="1 : N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=ERone;startArrow=ERmany" edge="1" parent="1" source="users" target="transaksi"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="note" value="Catatan: kategori/lokasi yang dihapus membuat FK barang menjadi NULL.&lt;br&gt;Barang nonaktif tidak ditampilkan pada daftar aktif." style="shape=note;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666" vertex="1" parent="1"><mxGeometry x="420" y="500" width="610" height="90" as="geometry"/></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

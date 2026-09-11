@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Akses StorageQR dari HP</title>
+  <style>
+    :root{color-scheme:light; font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.5;color:#172554;background:#eef5ff}
+    body{margin:0;padding:24px}.card{max-width:680px;margin:auto;background:#fff;border-radius:16px;padding:24px;box-shadow:0 12px 35px #163b7a20}h1{margin-top:0;font-size:1.5rem}h2{font-size:1.05rem;margin-top:24px;color:#1d4ed8}.btn{display:block;text-align:center;text-decoration:none;border-radius:10px;padding:12px 14px;margin:10px 0;background:#2563eb;color:#fff;font-weight:700}.btn.alt{background:#e8f0ff;color:#1d4ed8}.note{padding:12px;border-radius:10px;background:#fff7ed;color:#9a3412}.muted{color:#52637f;font-size:.93rem}ol{padding-left:22px}code{word-break:break-all}
+  </style>
+</head>
+<body>
+  <main class="card">
+    <h1>Akses StorageQR dari HP</h1>
+    <p class="muted">Pastikan HP terhubung ke Wi-Fi yang sama dengan komputer server.</p>
+    <a class="btn" id="cert" href="assets/storage-lan.crt">1. Unduh sertifikat HTTPS</a>
+    <a class="btn alt" id="app" href="index.php?page=scan">2. Buka StorageQR</a>
+    <div class="note"><b>Penting:</b> kamera live hanya bisa dipakai melalui HTTPS dan sertifikat harus dipercaya oleh HP. Jika belum memasang sertifikat, gunakan tombol pertama terlebih dahulu.</div>
+    <h2>Android</h2>
+    <ol><li>Unduh sertifikat di atas.</li><li>Buka Settings → Security/Privacy → Install certificate → CA certificate. Nama menu dapat sedikit berbeda tiap merek.</li><li>Pilih file <code>storage-lan.crt</code>, lalu konfirmasi.</li><li>Buka URL HTTPS dan izinkan kamera.</li></ol>
+    <h2>iPhone/iPad</h2>
+    <ol><li>Unduh sertifikat menggunakan Safari.</li><li>Buka Settings → Profile Downloaded, lalu Install.</li><li>Buka Settings → General → About → Certificate Trust Settings, aktifkan trust untuk sertifikat StorageQR.</li><li>Buka URL HTTPS dan izinkan kamera.</li></ol>
+    <p class="muted">Jika halaman HTTP ini tidak bisa dibuka, jalankan Apache/XAMPP sebagai Administrator atau izinkan Apache pada Windows Firewall untuk jaringan Private, port TCP 80 dan 443.</p>
+  </main>
+  <script>
+    const host = location.hostname;
+    document.querySelector('#cert').href = `assets/storage-lan.crt`;
+    document.querySelector('#app').href = `https://${host}/storage/index.php?page=scan`;
+  </script>
+</body>
+</html>
