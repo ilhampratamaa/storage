@@ -1,2 +1,17 @@
-<?php require_once __DIR__.'/bootstrap.php'; if(logged_in()){header('Location: '.url('index.php'));exit;} if(is_post()){verify_csrf();$s=$pdo->prepare('SELECT * FROM users WHERE username=? AND aktif=1');$s->execute([trim($_POST['username']??'')]);$u=$s->fetch(PDO::FETCH_ASSOC);if($u&&password_verify($_POST['password']??'',$u['password'])){$_SESSION['user']=['id'=>$u['id'],'nama'=>$u['nama'],'role'=>$u['role']];header('Location: '.url('index.php'));exit;} $error='Username atau password salah.';} ?>
-<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Login | StorageQR</title><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"><link href="<?=url('assets/style.css')?>" rel="stylesheet"></head><body><div class="container"><div class="row justify-content-center align-items-center min-vh-100"><div class="col-md-5 col-lg-4"><div class="card border-0"><div class="card-body p-4 p-md-5"><div class="stat-icon mb-3">▣</div><h2 class="text-primary fw-bold">StorageQR</h2><p class="text-secondary mb-4">Masuk untuk mengelola gudang Anda.</p><?php if(!empty($error)):?><div class="alert alert-danger"><?=e($error)?></div><?php endif?><form method="post"><input type="hidden" name="csrf" value="<?=csrf()?>"><div class="mb-3"><label class="form-label">Username</label><input class="form-control" name="username" required autofocus></div><div class="mb-4"><label class="form-label">Password</label><input type="password" class="form-control" name="password" required></div><button class="btn btn-primary w-100">Masuk</button></form><hr><small class="text-secondary">Default: <b>admin</b> / <b>admin123</b></small></div></div></div></div></div></body></html>
+<?php
+require_once __DIR__.'/bootstrap.php';
+if (logged_in()) { header('Location: '.url('index.php')); exit; }
+if (is_post()) {
+	verify_csrf();
+	$s = $pdo->prepare('SELECT * FROM users WHERE username=? AND aktif=1');
+	$s->execute([trim($_POST['username'] ?? '')]);
+	$u = $s->fetch(PDO::FETCH_ASSOC);
+	if ($u && password_verify($_POST['password'] ?? '', $u['password'])) {
+		session_regenerate_id(true);
+		$_SESSION['user'] = ['id'=>$u['id'], 'nama'=>$u['nama'], 'role'=>$u['role']];
+		header('Location: '.url('index.php')); exit;
+	}
+	$error = 'Username atau password salah.';
+}
+?>
+<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Login | StorageQR</title><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"><link href="<?=url('assets/style.css')?>" rel="stylesheet"></head><body><div class="container"><div class="row justify-content-center align-items-center min-vh-100"><div class="col-md-5 col-lg-4"><div class="card border-0"><div class="card-body p-4 p-md-5"><div class="stat-icon mb-3">▣</div><h2 class="text-primary fw-bold">StorageQR</h2><p class="text-secondary mb-4">Masuk sebagai Admin atau Member.</p><?php if(!empty($error)):?><div class="alert alert-danger"><?=e($error)?></div><?php endif?><form method="post"><input type="hidden" name="csrf" value="<?=csrf()?>"><div class="mb-3"><label class="form-label">Username</label><input class="form-control" name="username" required autofocus></div><div class="mb-4"><label class="form-label">Password</label><input type="password" class="form-control" name="password" required></div><button class="btn btn-primary w-100">Masuk</button></form><a class="btn btn-outline-secondary w-100 mt-2" href="<?=url('index.php?page=barang')?>">Lanjut sebagai Guest</a><p class="text-center mt-3 mb-0">Belum punya akun? <a href="<?=url('register.php')?>">Daftar sebagai Member</a></p><hr><small class="text-secondary">Admin awal: <b>admin</b> / <b>admin123</b></small></div></div></div></div></div></body></html>

@@ -1,9 +1,9 @@
 <?php
-require_once __DIR__.'/bootstrap.php'; require_login();
+require_once __DIR__.'/bootstrap.php'; permission_only('reports_view');
 $periode=$_GET['periode']??'harian';if(!in_array($periode,['harian','bulanan'],true))$periode='harian';
 $tanggal=$_GET['tanggal']??date('Y-m-d');$bulan=$_GET['bulan']??date('Y-m');
-if($periode==='harian'){$label='LAPORAN HARIAN';$rentang=$tanggal;$sql='SELECT t.*,b.kode,b.nama,b.satuan,u.nama user FROM transaksi t JOIN barang b ON b.id=t.barang_id JOIN users u ON u.id=t.user_id WHERE t.tanggal=? ORDER BY t.id';$params=[$tanggal];}
-else{$label='LAPORAN BULANAN';$rentang=date('F Y',strtotime($bulan.'-01'));$sql='SELECT t.*,b.kode,b.nama,b.satuan,u.nama user FROM transaksi t JOIN barang b ON b.id=t.barang_id JOIN users u ON u.id=t.user_id WHERE DATE_FORMAT(t.tanggal,"%Y-%m")=? ORDER BY t.tanggal,t.id';$params=[$bulan];}
+if($periode==='harian'){$label='LAPORAN HARIAN';$rentang=$tanggal;$sql='SELECT t.*,CONCAT(DATE_FORMAT(t.tanggal,"%Y-%m-%d")," ",DATE_FORMAT(t.created_at,"%H:%i:%s")) tanggal,b.kode,b.nama,b.satuan,u.nama user FROM transaksi t JOIN barang b ON b.id=t.barang_id JOIN users u ON u.id=t.user_id WHERE t.tanggal=? ORDER BY t.id';$params=[$tanggal];}
+else{$label='LAPORAN BULANAN';$rentang=date('F Y',strtotime($bulan.'-01'));$sql='SELECT t.*,CONCAT(DATE_FORMAT(t.tanggal,"%Y-%m-%d")," ",DATE_FORMAT(t.created_at,"%H:%i:%s")) tanggal,b.kode,b.nama,b.satuan,u.nama user FROM transaksi t JOIN barang b ON b.id=t.barang_id JOIN users u ON u.id=t.user_id WHERE DATE_FORMAT(t.tanggal,"%Y-%m")=? ORDER BY t.tanggal,t.id';$params=[$bulan];}
 $s=$pdo->prepare($sql);$s->execute($params);$rows=$s->fetchAll(PDO::FETCH_ASSOC);$masuk=0;$keluar=0;foreach($rows as $r){if($r['jenis']==='masuk')$masuk+=(int)$r['jumlah'];else $keluar+=(int)$r['jumlah'];}
 function pdf_clean($text,$limit=80){$text=strip_tags((string)$text);$text=preg_replace('/\s+/',' ',$text);$text=iconv('UTF-8','Windows-1252//TRANSLIT//IGNORE',$text)?:'';return mb_strlen($text)>$limit?mb_substr($text,0,$limit-3).'...':$text;}
 function pdf_text($x,$y,$text,$size=10,$bold=false){$font=$bold?'F2':'F1';$text=str_replace(['\\','(',')'],['\\\\','\\(', '\\)'],pdf_clean($text));return "BT /$font $size Tf 1 0 0 1 $x $y Tm ($text) Tj ET\n";}

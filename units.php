@@ -1,10 +1,11 @@
 <?php
-require_once __DIR__.'/bootstrap.php'; require_login();
+require_once __DIR__.'/bootstrap.php';
+if(logged_in()) permission_only('units_view');
 $barangId=(int)($_GET['barang_id']??0);
 $locations=$pdo->query('SELECT * FROM lokasi ORDER BY gedung,ruang,rak')->fetchAll(PDO::FETCH_ASSOC);
 function unit_options($rows,$selected){foreach($rows as $row)echo '<option value="'.e($row['id']).'" '.($selected==$row['id']?'selected':'').'>'.e(location_name($row)).'</option>';}
 if(is_post()){
-	admin_only(); verify_csrf();
+	permission_only('unit_manage'); verify_csrf();
 	$unitId=(int)($_POST['unit_id']??0); $unitBarangId=(int)($_POST['barang_id']??0);
 	$s=$pdo->prepare('UPDATE barang_unit SET nama_unit=?,lokasi_id=?,spesifikasi=?,kondisi=?,catatan=? WHERE id=? AND barang_id=?');
 	$s->execute([trim($_POST['nama_unit']??'')?:null,$_POST['lokasi_id']?:null,trim($_POST['spesifikasi']??'')?:null,$_POST['kondisi']??'Baik',trim($_POST['catatan']??'')?:null,$unitId,$unitBarangId]);
